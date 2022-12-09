@@ -3,7 +3,8 @@ import os
 import serial, time, json
 from datetime import datetime
 
-ser = serial.Serial(port = '/dev/ttyACM0', baudrate=9600, timeout=1) 
+ser = serial.Serial(port='COM3', baudrate=9600, timeout=1)  // uncomment this for windows (check COM# port on arduino IDE)
+//ser = serial.Serial(port = '/dev/ttyACM0', baudrate=9600, timeout=1) // uncomment this for linux
 print("Connected to MCU")
 
 ACCESS_TOKEN='t8Hez8IY76UMd9N3VhSO'                 #Token of your device
@@ -21,6 +22,7 @@ dict = dict()
 
 
 while True:
+    start = time.time()
     data = ser.readline().decode('utf-8').replace('\r', "").replace('\n', "")
     data = data.split(',')
     if len(data) >= 2:
@@ -29,4 +31,8 @@ while True:
         dict["TMP"] = data[1]
         print(dict)
         output = json.dumps(dict)
+        packet_size = len(output)+2
         ret= client1.publish("v1/devices/me/telemetry",output) #topic-v1/devices/me/telemetry
+        packet_size = len(output)+2
+        end = time.time() - start
+        print("Bit rate = {} bit/s\n".format(packet_size*8/end))
