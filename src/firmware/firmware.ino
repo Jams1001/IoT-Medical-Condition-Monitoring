@@ -1,6 +1,7 @@
 #define USE_ARDUINO_INTERRUPTS true   
 #include <PulseSensorPlayground.h>      
 
+int sensorPin = A1;
 const int PulseWire = 0;  
 const int LED13 = 13;        
 int Threshold = 550;          
@@ -16,7 +17,11 @@ void setup() {
 }
 void loop() {
   int myBPM = pulseSensor.getBeatsPerMinute();
-  int temp = 23; 
+  int reading = analogRead(sensorPin);
+  float voltage = reading * 3.3;
+  voltage /= 1024.0;
+  voltage *= 0.5;
+  int temp = (voltage - 0.5) * 100; 
   Serial.print(myBPM);
   Serial.print(",");
   Serial.println(temp);                     
