@@ -3,8 +3,8 @@ import os
 import serial, time, json
 from datetime import datetime
 
-ser = serial.Serial(port='COM3', baudrate=9600, timeout=1)  // uncomment this for windows (check COM# port on arduino IDE)
-//ser = serial.Serial(port = '/dev/ttyACM0', baudrate=9600, timeout=1) // uncomment this for linux
+ser = serial.Serial(port='COM3', baudrate=9600, timeout=1)  # uncomment this for windows (check COM# port on arduino IDE)
+#ser = serial.Serial(port = '/dev/ttyACM0', baudrate=9600, timeout=1) # uncomment this for linux
 print("Connected to MCU")
 
 ACCESS_TOKEN='t8Hez8IY76UMd9N3VhSO'                 #Token of your device
